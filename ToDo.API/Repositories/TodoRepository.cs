@@ -16,6 +16,7 @@ namespace ToDo.API.Repositories
 
         public async Task<ToDoItem> CreateAsync(ToDoItem todoItem)
         {
+            if (todoItem.Id == Guid.Empty) todoItem.Id = Guid.NewGuid();
             await _context.ToDos.AddAsync(todoItem);
             await _context.SaveChangesAsync();
             return todoItem;
@@ -23,7 +24,7 @@ namespace ToDo.API.Repositories
 
         public async Task<bool> DeleteAsync(Guid id)
         {
-            var todoItem = await _context.ToDos.FirstOrDefaultAsync(x => x.Id == id);
+            var todoItem = await _context.ToDos.FindAsync(id);
             if (todoItem == null) return false;
             _context.ToDos.Remove(todoItem);
             await _context.SaveChangesAsync();
@@ -32,12 +33,12 @@ namespace ToDo.API.Repositories
 
         public async Task<IEnumerable<ToDoItem>> GetAllAsync()
         {
-            return await _context.ToDos.ToListAsync();
+            return await _context.ToDos.OrderBy(x => x.CreatedAt).ToListAsync();
         }
 
         public async Task<ToDoItem> GetByIdAsync(Guid id)
         {
-            return await _context.ToDos.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.ToDos.FindAsync(id);
         }
 
         public async Task<ToDoItem> UpdateAsync(ToDoItem todoItem)
