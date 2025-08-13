@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using ToDo.API.Data;
+using ToDo.API.Repositories;
+using ToDo.API.Repositories.Interfaces;
+using ToDo.API.Services;
+using ToDo.API.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ToDoDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ToDoDbConnection")));
+
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
+builder.Services.AddScoped<IToDoItemService, ToDoItemService>();
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 
