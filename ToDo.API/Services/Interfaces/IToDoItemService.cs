@@ -6,8 +6,8 @@ namespace ToDo.API.Services.Interfaces
     {
         Task<IEnumerable<ToDoReadDto>> GetAllAsync();
         Task<ToDoReadDto> GetByIdAsync(Guid id);
-        Task<ToDoCreateDto> CreateAsync(ToDoCreateDto dto);
-        Task<ToDoCreateDto> UpdateAsync(Guid id, ToDoCreateDto dto);
+        Task<ToDoReadDto> CreateAsync(ToDoCreateDto dto);
+        Task<ToDoReadDto> UpdateAsync(Guid id, ToDoUpdateDto dto);
         Task<bool> DeleteAsync(Guid id);
     }
 }

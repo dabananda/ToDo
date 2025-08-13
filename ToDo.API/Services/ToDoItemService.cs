@@ -17,11 +17,11 @@ namespace ToDo.API.Services
             _mapper = mapper;
         }
 
-        public async Task<ToDoCreateDto> CreateAsync(ToDoCreateDto dto)
+        public async Task<ToDoReadDto> CreateAsync(ToDoCreateDto dto)
         {
             var todoDomain = _mapper.Map<ToDoItem>(dto);
             todoDomain = await _todoRepo.CreateAsync(todoDomain);
-            var todoDto = _mapper.Map<ToDoCreateDto>(todoDomain);
+            var todoDto = _mapper.Map<ToDoReadDto>(todoDomain);
             return todoDto;
         }
 
@@ -44,12 +44,12 @@ namespace ToDo.API.Services
             return todoDto;
         }
 
-        public async Task<ToDoCreateDto> UpdateAsync(Guid id, ToDoCreateDto dto)
+        public async Task<ToDoReadDto> UpdateAsync(Guid id, ToDoUpdateDto dto)
         {
             var todoDomain = await _todoRepo.GetByIdAsync(id);
             _mapper.Map(dto, todoDomain);
             todoDomain = await _todoRepo.UpdateAsync(todoDomain);
-            var updatedDto = _mapper.Map<ToDoCreateDto>(todoDomain);
+            var updatedDto = _mapper.Map<ToDoReadDto>(todoDomain);
             return updatedDto;
         }
     }
