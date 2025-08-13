@@ -47,6 +47,7 @@ namespace ToDo.API.Services
         public async Task<ToDoReadDto> UpdateAsync(Guid id, ToDoUpdateDto dto)
         {
             var todoDomain = await _todoRepo.GetByIdAsync(id);
+            if (todoDomain == null) return null;
             _mapper.Map(dto, todoDomain);
             todoDomain = await _todoRepo.UpdateAsync(todoDomain);
             var updatedDto = _mapper.Map<ToDoReadDto>(todoDomain);
