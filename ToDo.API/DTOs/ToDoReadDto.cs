@@ -1,6 +1,6 @@
-﻿namespace ToDo.API.Models
+﻿namespace ToDo.API.DTOs
 {
-    public class ToDo
+    public class ToDoReadDto
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
